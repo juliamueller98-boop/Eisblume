@@ -3,7 +3,6 @@
    ============================================ */
 
 :root {
-  /* Brand Colors */
   --bg: #FBF5F1;
   --bg-soft: #F4ECE4;
   --surface: #FFFFFF;
@@ -29,7 +28,6 @@
   --danger: #E57373;
   --success: #6FBF73;
 
-  /* Category accents */
   --cat-nest: #FFE9DD;
   --cat-nest-dark: #C97A55;
   --cat-hamburg: #E0F0F7;
@@ -37,12 +35,10 @@
   --cat-fluchten: #E8F0DC;
   --cat-fluchten-dark: #6B8E4F;
 
-  /* Type */
   --font-script: 'Great Vibes', cursive;
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
 
-  /* Layout */
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
@@ -127,43 +123,47 @@ button {
 }
 
 /* ============================================
-   Splash
+   Splash — Cover voll im Bild
    ============================================ */
 
 .view--splash {
+  position: relative;
+  background-color: var(--bg);
   align-items: center;
-  justify-content: space-between;
-  padding: max(4rem, env(safe-area-inset-top)) 1.5rem 2.5rem;
-  text-align: center;
+  justify-content: flex-end;
+  padding: 0;
+  overflow: hidden;
 }
 
-.splash-cover {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 380px;
+.splash-image {
+  position: absolute;
+  inset: 0;
   background-image: url('cover.png');
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  aspect-ratio: 2/3;
-  margin: 0 auto;
 }
 
-.splash-title {
-  font-family: var(--font-script);
-  font-size: 0;
-  /* hidden because cover has the title; keep for screen readers */
+.splash-image::after {
+  content: '';
   position: absolute;
-  left: -9999px;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 60%,
+    rgba(15, 8, 30, 0.35) 90%,
+    rgba(15, 8, 30, 0.5) 100%
+  );
+  pointer-events: none;
 }
 
-.splash-subtitle {
-  position: absolute;
-  left: -9999px;
+.splash-button-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0 1.5rem max(2.5rem, env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: center;
 }
 
 /* ============================================
@@ -189,10 +189,6 @@ button {
 .btn--primary {
   background: linear-gradient(135deg, var(--pink), var(--pink-dark));
   color: white;
-  box-shadow: var(--shadow-md);
-}
-
-.btn--primary:hover {
   box-shadow: var(--shadow-lg);
 }
 
@@ -241,9 +237,7 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
-.user-card:active {
-  transform: scale(0.98);
-}
+.user-card:active { transform: scale(0.98); }
 
 .user-card--blume:hover, .user-card--blume:focus {
   border-color: var(--pink);
@@ -427,7 +421,7 @@ button {
 }
 
 /* ============================================
-   Category Cards
+   Category Cards — Neu mit dekorativem BG-Emoji
    ============================================ */
 
 .category-list {
@@ -438,66 +432,73 @@ button {
 }
 
 .category-card {
-  padding: 0;
+  position: relative;
+  padding: 1.75rem 1.5rem;
   border: none;
   border-radius: var(--radius-lg);
+  text-align: left;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
   box-shadow: var(--shadow-sm);
+  min-height: 130px;
 }
 
 .category-card:active { transform: scale(0.98); }
 .category-card:hover { box-shadow: var(--shadow-md); }
 
-.category-card__inner {
-  padding: 1.5rem 1.25rem;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.category-card__bg-emoji {
+  position: absolute;
+  right: -8px;
+  bottom: -28px;
+  font-size: 8.5rem;
+  opacity: 0.18;
+  pointer-events: none;
+  filter: blur(0.3px);
+  transform: rotate(-12deg);
+  z-index: 0;
+}
+
+.category-card__title,
+.category-card__desc {
   position: relative;
-}
-
-.cat-nestwaerme .category-card__inner {
-  background: linear-gradient(135deg, #FFE9DD, #FFD4C0);
-  color: var(--cat-nest-dark);
-}
-
-.cat-hamburg .category-card__inner {
-  background: linear-gradient(135deg, #E0F0F7, #C8E2F0);
-  color: var(--cat-hamburg-dark);
-}
-
-.cat-fluchten .category-card__inner {
-  background: linear-gradient(135deg, #E8F0DC, #D2E2BC);
-  color: var(--cat-fluchten-dark);
-}
-
-.cat-all .category-card__inner {
-  background: linear-gradient(135deg, var(--pink-soft), var(--blue-soft));
-  color: var(--pink-dark);
+  z-index: 1;
 }
 
 .category-card__title {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   font-weight: 500;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 .category-card__desc {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   opacity: 0.85;
 }
 
-.category-card__count {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.25rem;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 500;
-  opacity: 0.7;
+.cat-nestwaerme {
+  background: linear-gradient(135deg, #FFE9DD 0%, #FFD4C0 100%);
+  color: var(--cat-nest-dark);
+}
+
+.cat-hamburg {
+  background: linear-gradient(135deg, #E0F0F7 0%, #C8E2F0 100%);
+  color: var(--cat-hamburg-dark);
+}
+
+.cat-fluchten {
+  background: linear-gradient(135deg, #E8F0DC 0%, #D2E2BC 100%);
+  color: var(--cat-fluchten-dark);
+}
+
+.cat-all {
+  background: linear-gradient(135deg, var(--pink-soft) 0%, var(--blue-soft) 100%);
+  color: var(--pink-dark);
 }
 
 /* ============================================
@@ -962,9 +963,17 @@ button {
 
 .tag-status-match { background: var(--pink-soft); color: var(--pink-dark); }
 .tag-status-done { background: #DFF2DF; color: #3A7A3F; }
+.tag-status-skipped { background: #F4ECE4; color: #8B7060; }
 
-.overview-item__toggle {
-  font-size: 1.3rem;
+/* Overview Action Buttons */
+.overview-item__actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.overview-item__action {
+  font-size: 1rem;
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -973,17 +982,28 @@ button {
   align-items: center;
   justify-content: center;
   color: var(--text-muted);
-  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
 }
 
-.overview-item__toggle.done {
+.overview-item__action:hover {
+  background: var(--pink-soft);
+  color: var(--pink);
+}
+
+.overview-item__action.active {
   background: var(--success);
   color: white;
 }
 
-/* ============================================
-   Responsive — Desktop niceties
-   ============================================ */
+.overview-item__action--reset {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+}
+
+.overview-item__action--reset:hover {
+  background: var(--blue);
+  color: white;
+}
 
 @media (min-width: 700px) {
   .swipe-card {

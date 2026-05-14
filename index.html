@@ -8,8 +8,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Eisblume" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="cover.png" />
-  <link rel="icon" type="image/png" href="cover.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="icon-152.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="icon-120.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <title>Eisblume</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,13 +22,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Splash Screen -->
+  <!-- Splash Screen (vollbild Cover) -->
   <section class="view view--splash active" id="view-splash">
-    <div class="splash-cover" id="splash-cover">
-      <h1 class="splash-title">Eisblume</h1>
-      <p class="splash-subtitle">Das Date-Spiel für Mr. und Mrs. Frost</p>
+    <div class="splash-image" aria-label="Eisblume Cover"></div>
+    <div class="splash-button-wrap">
+      <button class="btn btn--primary btn--large" id="splash-start">Los geht's</button>
     </div>
-    <button class="btn btn--primary btn--large" id="splash-start">Los geht's</button>
   </section>
 
   <!-- User Select -->
@@ -95,32 +97,24 @@
       <p class="menu-sub">In welcher Stimmung seid ihr?</p>
       <div class="category-list">
         <button class="category-card cat-nestwaerme" data-category="nestwaerme">
-          <div class="category-card__inner">
-            <span class="category-card__title">Nestwärme</span>
-            <span class="category-card__desc">Zuhause, Wellness, Runterkommen</span>
-            <span class="category-card__count" data-count="nestwaerme"></span>
-          </div>
+          <span class="category-card__bg-emoji" aria-hidden="true">🕯️</span>
+          <span class="category-card__title">Nestwärme</span>
+          <span class="category-card__desc">Zuhause, Wellness, Runterkommen</span>
         </button>
         <button class="category-card cat-hamburg" data-category="hamburg">
-          <div class="category-card__inner">
-            <span class="category-card__title">Hamburger Herzstücke</span>
-            <span class="category-card__desc">Stadt, Hafen, Kultur, Essen</span>
-            <span class="category-card__count" data-count="hamburg"></span>
-          </div>
+          <span class="category-card__bg-emoji" aria-hidden="true">⚓</span>
+          <span class="category-card__title">Hamburger Herzstücke</span>
+          <span class="category-card__desc">Stadt, Hafen, Kultur, Essen</span>
         </button>
         <button class="category-card cat-fluchten" data-category="fluchten">
-          <div class="category-card__inner">
-            <span class="category-card__title">Kleine Fluchten</span>
-            <span class="category-card__desc">Tagestrips, Camper, Meer</span>
-            <span class="category-card__count" data-count="fluchten"></span>
-          </div>
+          <span class="category-card__bg-emoji" aria-hidden="true">🌿</span>
+          <span class="category-card__title">Kleine Fluchten</span>
+          <span class="category-card__desc">Tagestrips, Camper, Meer</span>
         </button>
         <button class="category-card cat-all" data-category="all">
-          <div class="category-card__inner">
-            <span class="category-card__title">Alle Kategorien</span>
-            <span class="category-card__desc">Einfach alles, was kommt</span>
-            <span class="category-card__count" data-count="all"></span>
-          </div>
+          <span class="category-card__bg-emoji" aria-hidden="true">✨</span>
+          <span class="category-card__title">Alle Kategorien</span>
+          <span class="category-card__desc">Einfach alles, was kommt</span>
         </button>
       </div>
     </div>
@@ -140,9 +134,9 @@
 
     <div class="swipe-empty hidden" id="swipe-empty">
       <p class="swipe-empty__emoji">🌷</p>
-      <h3 class="swipe-empty__title">Alles durchgeswiped</h3>
-      <p class="swipe-empty__text">Du hast in dieser Kategorie alle Ideen bewertet. Schau bei den Matches vorbei oder probier eine andere Kategorie.</p>
-      <button class="btn btn--primary" data-go="matches">Matches ansehen</button>
+      <h3 class="swipe-empty__title">Du bist durch</h3>
+      <p class="swipe-empty__text">Du hast in dieser Kategorie alle Ideen bewertet. Du kannst übersprungene wieder freigeben oder eine andere Kategorie probieren.</p>
+      <button class="btn btn--primary" id="reactivate-skipped">Übersprungene wieder zeigen</button>
       <button class="btn btn--ghost" data-go="categories">Andere Kategorie</button>
     </div>
 
@@ -193,7 +187,8 @@
       <div class="filter-bar" id="filter-bar">
         <button class="filter-chip active" data-filter="all">Alle</button>
         <button class="filter-chip" data-filter="match">Matches</button>
-        <button class="filter-chip" data-filter="done">Schon gemacht</button>
+        <button class="filter-chip" data-filter="done">Gemacht</button>
+        <button class="filter-chip" data-filter="skipped">Übersprungen</button>
         <button class="filter-chip" data-filter="open">Offen</button>
       </div>
       <div class="overview-list" id="overview-list">

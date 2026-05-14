@@ -51,6 +51,13 @@ function saveVote(user, dateId, vote) {
   writeJSON(key, votes);
 }
 
+function deleteVote(user, dateId) {
+  const votes = getVotes(user);
+  delete votes[dateId];
+  const key = user === 'frost' ? STORAGE.votesFrost : STORAGE.votesBlume;
+  writeJSON(key, votes);
+}
+
 function getDone() {
   return readJSON(STORAGE.done, []);
 }
@@ -102,7 +109,6 @@ function showView(name) {
   if (name === 'menu') updateMenuCounts();
   if (name === 'matches') renderMatches();
   if (name === 'overview') renderOverview();
-  if (name === 'categories') updateCategoryCounts();
 }
 
 // ============================================
@@ -116,24 +122,6 @@ function updateMenuCounts() {
     badge.textContent = matches;
     badge.dataset.empty = matches === 0 ? 'true' : 'false';
   }
-}
-
-function updateCategoryCounts() {
-  if (!currentUser) return;
-  const votes = getVotes(currentUser);
-  const categories = ['nestwaerme', 'hamburg', 'fluchten'];
-
-  categories.forEach(cat => {
-    const total = dates.filter(d => d.kategorie === cat).length;
-    const open = dates.filter(d => d.kategorie === cat && !votes[d.id]).length;
-    const el = document.querySelector(`[data-count="${cat}"]`);
-    if (el) el.textContent = open + ' von ' + total;
-  });
-
-  const allTotal = dates.length;
-  const allOpen = dates.filter(d => !votes[d.id]).length;
-  const allEl = document.querySelector('[data-count="all"]');
-  if (allEl) allEl.textContent = allOpen + ' von ' + allTotal;
 }
 
 // ============================================
@@ -198,7 +186,7 @@ function buildCard(date, isBg) {
   card.dataset.id = date.id;
   card.innerHTML = `
     <div class="swipe-card__stamp swipe-card__stamp--like">Herz</div>
-    <div class="swipe-card__stamp swipe-card__stamp--nope">Nope</div>
+    <div class="swipe-card__stamp swipe-card__stamp--nope">Später</div>
     <div class="swipe-card__category">${CATEGORY_LABELS[date.kategorie]}</div>
     <div class="swipe-card__emoji">${date.emoji}</div>
     <h2 class="swipe-card__title">${date.titel}</h2>
@@ -297,6 +285,27 @@ function triggerButtonVote(action) {
   flyAway(currentCard, date, action);
 }
 
+function reactivateSkipped() {
+  // Remove all 'skip' votes for current user in current category
+  const votes = getVotes(currentUser);
+  let changed = false;
+  for (const id in votes) {
+    if (votes[id] === 'skip') {
+      const date = dates.find(d => d.id === id);
+      if (!date) continue;
+      if (currentCategory === 'all' || date.kategorie === currentCategory) {
+        delete votes[id];
+        changed = true;
+      }
+    }
+  }
+  if (changed) {
+    const key = currentUser === 'frost' ? STORAGE.votesFrost : STORAGE.votesBlume;
+    writeJSON(key, votes);
+  }
+  renderNextCard();
+}
+
 // ============================================
 // Match Overlay
 // ============================================
@@ -363,18 +372,25 @@ function renderMatches() {
 
 let overviewFilter = 'all';
 
+function getStatusForUser(dateId, user) {
+  const votes = getVotes(user);
+  return votes[dateId] || null; // 'like', 'skip', or null
+}
+
 function renderOverview() {
   const list = document.getElementById('overview-list');
   const blume = getVotes('blume');
   const frost = getVotes('frost');
+  const done = getDone();
 
   let filtered = dates.slice();
 
   if (overviewFilter === 'match') {
     filtered = filtered.filter(d => blume[d.id] === 'like' && frost[d.id] === 'like');
   } else if (overviewFilter === 'done') {
-    const done = getDone();
     filtered = filtered.filter(d => done.includes(d.id));
+  } else if (overviewFilter === 'skipped') {
+    filtered = filtered.filter(d => blume[d.id] === 'skip' || frost[d.id] === 'skip');
   } else if (overviewFilter === 'open') {
     filtered = filtered.filter(d => !blume[d.id] || !frost[d.id]);
   }
@@ -388,14 +404,32 @@ function renderOverview() {
 
   filtered.forEach(date => {
     const isMatch = blume[date.id] === 'like' && frost[date.id] === 'like';
-    const done = isDone(date.id);
+    const isDoneItem = done.includes(date.id);
+    const userSkipped = getStatusForUser(date.id, currentUser) === 'skip';
     const item = document.createElement('div');
     item.className = 'overview-item';
 
     const tags = [];
     tags.push(`<span class="overview-item__tag tag-cat-${date.kategorie}">${CATEGORY_LABELS[date.kategorie]}</span>`);
     if (isMatch) tags.push('<span class="overview-item__tag tag-status-match">Match</span>');
-    if (done) tags.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
+    if (isDoneItem) tags.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
+    if (userSkipped) tags.push('<span class="overview-item__tag tag-status-skipped">Du übersprungen</span>');
+
+    const actions = [];
+    // "Done" Toggle
+    actions.push(`
+      <button class="overview-item__action ${isDoneItem ? 'active' : ''}" data-action="done" data-id="${date.id}" title="Schon gemacht?">
+        ${isDoneItem ? '✓' : '○'}
+      </button>
+    `);
+    // Reset Skip Button (nur wenn aktuell selbst skipped)
+    if (userSkipped) {
+      actions.push(`
+        <button class="overview-item__action overview-item__action--reset" data-action="reset-skip" data-id="${date.id}" title="Wieder in den Stapel">
+          ↺
+        </button>
+      `);
+    }
 
     item.innerHTML = `
       <div class="overview-item__emoji">${date.emoji}</div>
@@ -403,16 +437,21 @@ function renderOverview() {
         <div class="overview-item__title">${date.titel}</div>
         <div class="overview-item__meta">${tags.join('')}</div>
       </div>
-      <button class="overview-item__toggle ${done ? 'done' : ''}" data-id="${date.id}" title="Schon gemacht?">
-        ${done ? '✓' : '○'}
-      </button>
+      <div class="overview-item__actions">${actions.join('')}</div>
     `;
     list.appendChild(item);
   });
 
-  list.querySelectorAll('.overview-item__toggle').forEach(btn => {
+  list.querySelectorAll('[data-action="done"]').forEach(btn => {
     btn.addEventListener('click', () => {
       toggleDone(btn.dataset.id);
+      renderOverview();
+    });
+  });
+
+  list.querySelectorAll('[data-action="reset-skip"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      deleteVote(currentUser, btn.dataset.id);
       renderOverview();
     });
   });
@@ -451,6 +490,8 @@ function bindNavigation() {
 
   document.getElementById('match-overlay-close').addEventListener('click', hideMatchOverlay);
 
+  document.getElementById('reactivate-skipped').addEventListener('click', reactivateSkipped);
+
   document.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
@@ -461,7 +502,7 @@ function bindNavigation() {
   });
 
   document.getElementById('reset-btn').addEventListener('click', () => {
-    if (confirm('Wirklich alles zurücksetzen? Alle Herzen und Matches gehen verloren.')) {
+    if (confirm('Wirklich alles zurücksetzen? Alle Herzen, Skips und Matches gehen verloren.')) {
       localStorage.removeItem(STORAGE.votesBlume);
       localStorage.removeItem(STORAGE.votesFrost);
       localStorage.removeItem(STORAGE.done);
