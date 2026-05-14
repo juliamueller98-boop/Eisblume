@@ -123,45 +123,35 @@ button {
 }
 
 /* ============================================
-   Splash — Cover voll im Bild
+   Splash — Cover zentriert auf weichem Verlauf
    ============================================ */
 
 .view--splash {
   position: relative;
-  background-color: var(--bg);
+  background: linear-gradient(170deg, #FDE8EA 0%, #FBF1ED 45%, #E3F0FA 100%);
   align-items: center;
-  justify-content: flex-end;
-  padding: 0;
+  justify-content: space-between;
+  padding: max(3rem, env(safe-area-inset-top)) 1.5rem max(2.5rem, env(safe-area-inset-bottom));
   overflow: hidden;
 }
 
 .splash-image {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
   background-image: url('cover.png');
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.splash-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 60%,
-    rgba(15, 8, 30, 0.35) 90%,
-    rgba(15, 8, 30, 0.5) 100%
-  );
-  pointer-events: none;
 }
 
 .splash-button-wrap {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 0 1.5rem max(2.5rem, env(safe-area-inset-bottom));
+  padding: 1.5rem 0 0;
   display: flex;
   justify-content: center;
 }
