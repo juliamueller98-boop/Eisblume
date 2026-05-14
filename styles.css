@@ -123,12 +123,12 @@ button {
 }
 
 /* ============================================
-   Splash — Cover zentriert auf weichem Verlauf
+   Splash — Cover zentriert, weißer Hintergrund
    ============================================ */
 
 .view--splash {
   position: relative;
-  background: linear-gradient(170deg, #FDE8EA 0%, #FBF1ED 45%, #E3F0FA 100%);
+  background: #FFFFFF;
   align-items: center;
   justify-content: space-between;
   padding: max(3rem, env(safe-area-inset-top)) 1.5rem max(2.5rem, env(safe-area-inset-bottom));
@@ -323,6 +323,14 @@ button {
 /* ============================================
    Menu
    ============================================ */
+
+.menu-top {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+  margin-right: -0.5rem;
+  margin-bottom: 0.5rem;
+}
 
 .menu-greeting {
   font-family: var(--font-display);
