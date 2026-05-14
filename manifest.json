@@ -1,0 +1,25 @@
+{
+  "name": "Eisblume",
+  "short_name": "Eisblume",
+  "description": "Das Date-Spiel für Mr. und Mrs. Frost",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF5F1",
+  "theme_color": "#D85B7C",
+  "icons": [
+    {
+      "src": "cover.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "cover.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

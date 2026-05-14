@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#D85B7C" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Eisblume" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="cover.png" />
+  <link rel="icon" type="image/png" href="cover.png" />
+  <title>Eisblume</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Splash Screen -->
+  <section class="view view--splash active" id="view-splash">
+    <div class="splash-cover" id="splash-cover">
+      <h1 class="splash-title">Eisblume</h1>
+      <p class="splash-subtitle">Das Date-Spiel für Mr. und Mrs. Frost</p>
+    </div>
+    <button class="btn btn--primary btn--large" id="splash-start">Los geht's</button>
+  </section>
+
+  <!-- User Select -->
+  <section class="view view--center" id="view-user-select">
+    <div class="container container--narrow">
+      <h2 class="heading-display">Wer bist du gerade?</h2>
+      <div class="user-select">
+        <button class="user-card user-card--blume" data-user="blume">
+          <span class="user-card__emoji">🌸</span>
+          <span class="user-card__name">Blume</span>
+          <span class="user-card__sub">Laura</span>
+        </button>
+        <button class="user-card user-card--frost" data-user="frost">
+          <span class="user-card__emoji">❄️</span>
+          <span class="user-card__name">Frost</span>
+          <span class="user-card__sub">Konsti</span>
+        </button>
+      </div>
+      <p class="user-hint">Reicht das Handy einfach hin und her und wechselt hier oben, wer gerade swiped.</p>
+    </div>
+  </section>
+
+  <!-- Main Menu -->
+  <section class="view" id="view-menu">
+    <div class="topbar">
+      <div class="topbar__title">Eisblume</div>
+      <button class="topbar__user" id="topbar-user-btn">
+        <span id="current-user-label">Blume</span>
+        <span class="topbar__switch">wechseln</span>
+      </button>
+    </div>
+    <div class="container">
+      <h2 class="menu-greeting" id="menu-greeting">Hallo!</h2>
+      <p class="menu-sub">Wonach steht euch heute der Sinn?</p>
+
+      <div class="menu-grid">
+        <button class="menu-card menu-card--swipe" data-go="categories">
+          <span class="menu-card__emoji">💞</span>
+          <span class="menu-card__title">Swipen</span>
+          <span class="menu-card__desc">Neue Ideen durchgehen und Herzen verteilen</span>
+        </button>
+        <button class="menu-card menu-card--matches" data-go="matches">
+          <span class="menu-card__emoji">✨</span>
+          <span class="menu-card__title">Unsere Matches</span>
+          <span class="menu-card__desc">Ideen, die ihr beide mögt</span>
+          <span class="menu-card__badge" id="matches-count">0</span>
+        </button>
+        <button class="menu-card menu-card--overview" data-go="overview">
+          <span class="menu-card__emoji">📚</span>
+          <span class="menu-card__title">Übersicht</span>
+          <span class="menu-card__desc">Alle Ideen mit Status</span>
+        </button>
+      </div>
+
+      <button class="reset-link" id="reset-btn">Alles zurücksetzen</button>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="view" id="view-categories">
+    <div class="topbar">
+      <button class="topbar__back" data-go="menu">‹ Zurück</button>
+      <div class="topbar__title">Kategorie wählen</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="container">
+      <p class="menu-sub">In welcher Stimmung seid ihr?</p>
+      <div class="category-list">
+        <button class="category-card cat-nestwaerme" data-category="nestwaerme">
+          <div class="category-card__inner">
+            <span class="category-card__title">Nestwärme</span>
+            <span class="category-card__desc">Zuhause, Wellness, Runterkommen</span>
+            <span class="category-card__count" data-count="nestwaerme"></span>
+          </div>
+        </button>
+        <button class="category-card cat-hamburg" data-category="hamburg">
+          <div class="category-card__inner">
+            <span class="category-card__title">Hamburger Herzstücke</span>
+            <span class="category-card__desc">Stadt, Hafen, Kultur, Essen</span>
+            <span class="category-card__count" data-count="hamburg"></span>
+          </div>
+        </button>
+        <button class="category-card cat-fluchten" data-category="fluchten">
+          <div class="category-card__inner">
+            <span class="category-card__title">Kleine Fluchten</span>
+            <span class="category-card__desc">Tagestrips, Camper, Meer</span>
+            <span class="category-card__count" data-count="fluchten"></span>
+          </div>
+        </button>
+        <button class="category-card cat-all" data-category="all">
+          <div class="category-card__inner">
+            <span class="category-card__title">Alle Kategorien</span>
+            <span class="category-card__desc">Einfach alles, was kommt</span>
+            <span class="category-card__count" data-count="all"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Swipe -->
+  <section class="view view--swipe" id="view-swipe">
+    <div class="topbar">
+      <button class="topbar__back" data-go="categories">‹ Zurück</button>
+      <div class="topbar__title" id="swipe-title">Kategorie</div>
+      <div class="topbar__spacer"></div>
+    </div>
+
+    <div class="swipe-stage" id="swipe-stage">
+      <!-- cards injected by JS -->
+    </div>
+
+    <div class="swipe-empty hidden" id="swipe-empty">
+      <p class="swipe-empty__emoji">🌷</p>
+      <h3 class="swipe-empty__title">Alles durchgeswiped</h3>
+      <p class="swipe-empty__text">Du hast in dieser Kategorie alle Ideen bewertet. Schau bei den Matches vorbei oder probier eine andere Kategorie.</p>
+      <button class="btn btn--primary" data-go="matches">Matches ansehen</button>
+      <button class="btn btn--ghost" data-go="categories">Andere Kategorie</button>
+    </div>
+
+    <div class="swipe-actions" id="swipe-actions">
+      <button class="circle-btn circle-btn--no" id="btn-nope" aria-label="Nein">✕</button>
+      <button class="circle-btn circle-btn--yes" id="btn-like" aria-label="Herz">♥</button>
+    </div>
+  </section>
+
+  <!-- Match Overlay -->
+  <div class="match-overlay hidden" id="match-overlay">
+    <div class="match-overlay__inner">
+      <div class="match-overlay__sparkle">✨</div>
+      <h2 class="match-overlay__title">Match!</h2>
+      <p class="match-overlay__text">Ihr habt beide ein Herz vergeben für</p>
+      <p class="match-overlay__date" id="match-overlay-title">...</p>
+      <button class="btn btn--primary" id="match-overlay-close">Weiter swipen</button>
+    </div>
+  </div>
+
+  <!-- Matches -->
+  <section class="view" id="view-matches">
+    <div class="topbar">
+      <button class="topbar__back" data-go="menu">‹ Zurück</button>
+      <div class="topbar__title">Unsere Matches</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="container">
+      <p class="menu-sub" id="matches-sub">Ideen, bei denen ihr beide ein Herz vergeben habt.</p>
+      <div class="match-list" id="match-list">
+        <!-- injected -->
+      </div>
+      <div class="empty-state hidden" id="matches-empty">
+        <p class="empty-state__emoji">💞</p>
+        <p class="empty-state__text">Noch keine Matches. Geht ein paar Karten zusammen durch, dann sammelt sich was an.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section class="view" id="view-overview">
+    <div class="topbar">
+      <button class="topbar__back" data-go="menu">‹ Zurück</button>
+      <div class="topbar__title">Übersicht</div>
+      <div class="topbar__spacer"></div>
+    </div>
+    <div class="container">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-chip active" data-filter="all">Alle</button>
+        <button class="filter-chip" data-filter="match">Matches</button>
+        <button class="filter-chip" data-filter="done">Schon gemacht</button>
+        <button class="filter-chip" data-filter="open">Offen</button>
+      </div>
+      <div class="overview-list" id="overview-list">
+        <!-- injected -->
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+[
+  {
+    "id": "thai-abend",
+    "kategorie": "nestwaerme",
+    "titel": "Thai-Abend zuhause",
+    "beschreibung": "Kocht ein veganes Thai-Curry mit Reisnudeln und macht Urlaubsmusik an. Thailand für eine Couch-Nacht.",
+    "emoji": "🍜"
+  },
+  {
+    "id": "sommerrollen-wettkampf",
+    "kategorie": "nestwaerme",
+    "titel": "Sommerrollen-Wettkampf",
+    "beschreibung": "Bereitet Reispapier, Kräuter, Tofu und Erdnussdip vor und rollt euch gegenseitig die beste Sommerrolle des Abends.",
+    "emoji": "🥬"
+  },
+  {
+    "id": "kuba-in-der-kueche",
+    "kategorie": "nestwaerme",
+    "titel": "Kuba in der Küche",
+    "beschreibung": "Kocht Reis mit schwarzen Bohnen und gebratener Kochbanane und mixt dazu alkoholfreie Mojitos. Wie damals in Havanna.",
+    "emoji": "🌴"
+  },
+  {
+    "id": "suedafrika-sundowner",
+    "kategorie": "nestwaerme",
+    "titel": "Südafrika-Sundowner",
+    "beschreibung": "Macht euch eine Snackplatte mit Mango, Avocado und Crackern und gönnt euch südafrikanischen Wein oder Rooibos-Eistee. Schaut dazu alte Fotos aus Kapstadt durch.",
+    "emoji": "🌅"
+  },
+  {
+    "id": "vabali-zuhause",
+    "kategorie": "nestwaerme",
+    "titel": "Vabali zuhause",
+    "beschreibung": "Baut euch euer eigenes kleines Spa mit Kerzen, Fußbad, Gesichtsmasken, Massageöl und Tee. Zwei Stunden Handy-Pause sind Pflicht.",
+    "emoji": "🕯️"
+  },
+  {
+    "id": "gegenseitige-massage",
+    "kategorie": "nestwaerme",
+    "titel": "Gegenseitige Massage",
+    "beschreibung": "Holt Massageöl raus, dimmt das Licht und massiert euch gegenseitig Rücken, Nacken oder Füße.",
+    "emoji": "💆"
+  },
+  {
+    "id": "pyjama-brunch",
+    "kategorie": "nestwaerme",
+    "titel": "Pyjama-Brunch",
+    "beschreibung": "Startet langsam in den Tag mit Pancakes, Kaffee und Obst. Regel: Vor Mittag wird nichts Produktives gemacht.",
+    "emoji": "🥞"
+  },
+  {
+    "id": "wohnzimmer-picknick",
+    "kategorie": "nestwaerme",
+    "titel": "Wohnzimmer-Picknick",
+    "beschreibung": "Legt eine Decke auf den Boden, knipst die Lichterketten an und esst Hummus, Antipasti, Obst, Nüsse und Cracker.",
+    "emoji": "🧺"
+  },
+  {
+    "id": "zehn-jahre-zehn-fotos",
+    "kategorie": "nestwaerme",
+    "titel": "10 Jahre in 10 Fotos",
+    "beschreibung": "Sucht jeweils fünf Fotos aus eurer Beziehung heraus und erzählt euch, warum genau dieses Bild hängen geblieben ist.",
+    "emoji": "📸"
+  },
+  {
+    "id": "naechstes-reiseziel",
+    "kategorie": "nestwaerme",
+    "titel": "Unser nächstes Reiseziel",
+    "beschreibung": "Pitcht euch gegenseitig drei Reiseziele. Jeder Pitch bekommt Punkte für Essen, Natur, Abenteuer, Erholung und Realismus.",
+    "emoji": "✈️"
+  },
+  {
+    "id": "blindes-laender-dinner",
+    "kategorie": "nestwaerme",
+    "titel": "Blindes Länder-Dinner",
+    "beschreibung": "Eine Person kocht ein Gericht, das an ein bestimmtes Land erinnert. Die andere errät, wohin die Reise kulinarisch geht.",
+    "emoji": "🌍"
+  },
+  {
+    "id": "mocktail-labor",
+    "kategorie": "nestwaerme",
+    "titel": "Mocktail-Labor",
+    "beschreibung": "Erfindet zwei Mocktails: einen namens „Frost\" und einen namens „Blume\". Stoßt damit auf euch an.",
+    "emoji": "🍹"
+  },
+  {
+    "id": "keine-plaene-abend",
+    "kategorie": "nestwaerme",
+    "titel": "Keine-Pläne-Abend",
+    "beschreibung": "Bestellt oder kocht etwas Einfaches, zieht bequeme Sachen an und entscheidet bewusst: Heute wird nichts optimiert.",
+    "emoji": "🛋️"
+  },
+  {
+    "id": "wohnzimmer-kino-fernweh",
+    "kategorie": "nestwaerme",
+    "titel": "Wohnzimmer-Kino mit Fernweh",
+    "beschreibung": "Schaut einen Film oder eine Doku zu einem Land, in dem ihr schon wart oder unbedingt noch hinwollt. Snacks Pflicht.",
+    "emoji": "🎬"
+  },
+  {
+    "id": "instagram-rezept",
+    "kategorie": "nestwaerme",
+    "titel": "Instagram-Rezept",
+    "beschreibung": "Holt ein Rezept aus euren Instagram-Speicherungen raus und probiert es endlich aus.",
+    "emoji": "📱"
+  },
+  {
+    "id": "dessert-date",
+    "kategorie": "nestwaerme",
+    "titel": "Dessert-Date",
+    "beschreibung": "Macht ein gemeinsames Dessert: Brownies, Mousse au Chocolat, Milchreis mit Mango oder Kokos-Panna-Cotta.",
+    "emoji": "🍫"
+  },
+  {
+    "id": "reisefoto-lotterie",
+    "kategorie": "nestwaerme",
+    "titel": "Reisefoto-Lotterie",
+    "beschreibung": "Scrollt zufällig durch alte Urlaubsfotos. Bei jedem Stopp erzählt ihr euch, woran ihr euch wirklich erinnert.",
+    "emoji": "📷"
+  },
+  {
+    "id": "badewanne-hoerbuch",
+    "kategorie": "nestwaerme",
+    "titel": "Badewanne & Hörbuch",
+    "beschreibung": "Macht euch ein Bad oder Fußbad, hört gemeinsam ein Hörbuch oder einen Podcast und redet danach nur noch über schöne Dinge.",
+    "emoji": "🛁"
+  },
+  {
+    "id": "brief-an-spaeter",
+    "kategorie": "nestwaerme",
+    "titel": "Brief an später",
+    "beschreibung": "Schreibt euch gegenseitig oder eurem Zukunfts-Ich einen Brief für den ersten Hochzeitstag. Aufmachen erst dann.",
+    "emoji": "💌"
+  },
+  {
+    "id": "playlist-zehn-jahre",
+    "kategorie": "nestwaerme",
+    "titel": "Playlist der letzten 10 Jahre",
+    "beschreibung": "Baut eine gemeinsame Playlist mit Songs aus euren 10 Jahren. Peinliche Phasen ausdrücklich erlaubt.",
+    "emoji": "🎵"
+  },
+  {
+    "id": "reisebudget-spiel",
+    "kategorie": "nestwaerme",
+    "titel": "Reisebudget-Spiel",
+    "beschreibung": "Legt ein Fantasiebudget fest und plant damit den besten Mini-Urlaub. Stufen: 300 €, 1.000 € oder „komplett eskaliert\".",
+    "emoji": "💸"
+  },
+  {
+    "id": "wellness-sonntag",
+    "kategorie": "nestwaerme",
+    "titel": "Wellness-Sonntag",
+    "beschreibung": "Macht morgens Meal Prep, räumt nur das Nötigste weg und verwandelt den Rest des Tages in Sauna-, Sofa- und Tee-Zeit.",
+    "emoji": "🍵"
+  },
+  {
+    "id": "vabali-reset",
+    "kategorie": "hamburg",
+    "titel": "Vabali Reset",
+    "beschreibung": "Nehmt euch einen halben oder ganzen Tag nur für Sauna, warmes Wasser und Bali-Gefühl vor den Toren Hamburgs.",
+    "emoji": "🧖"
+  },
+  {
+    "id": "floating-date",
+    "kategorie": "hamburg",
+    "titel": "Floating-Date",
+    "beschreibung": "Bucht euch Floating oder eine ruhige Wellness-Anwendung und redet danach erst wieder, wenn ihr beide wirklich angekommen seid.",
+    "emoji": "🌊"
+  },
+  {
+    "id": "planten-un-blomen-wasserlicht",
+    "kategorie": "hamburg",
+    "titel": "Planten un Blomen Wasserlicht",
+    "beschreibung": "Packt eine Decke und Snacks ein und schaut euch in Planten un Blomen die Wasserlichtkonzerte an. Saison ist Mai bis September.",
+    "emoji": "⛲"
+  },
+  {
+    "id": "faehre-62",
+    "kategorie": "hamburg",
+    "titel": "Fähre 62 statt Hafenrundfahrt",
+    "beschreibung": "Steigt an den Landungsbrücken in die Linie 62 und macht eine kleine Hafenrundfahrt für den Preis einer HVV-Karte.",
+    "emoji": "⛴️"
+  },
+  {
+    "id": "elbstrand-picknick",
+    "kategorie": "hamburg",
+    "titel": "Elbstrand-Picknick",
+    "beschreibung": "Packt eine Decke, Tee oder Wein und Snacks ein und schaut am Elbstrand Schiffe statt Serien.",
+    "emoji": "🚢"
+  },
+  {
+    "id": "treppenviertel-spaziergang",
+    "kategorie": "hamburg",
+    "titel": "Treppenviertel-Spaziergang",
+    "beschreibung": "Lauft durch Blankenese, sucht den schönsten Elbblick und macht das Foto, das danach an die Wand kommt.",
+    "emoji": "🏘️"
+  },
+  {
+    "id": "speicherstadt-foto-date",
+    "kategorie": "hamburg",
+    "titel": "Speicherstadt-Foto-Date",
+    "beschreibung": "Geht durch die Speicherstadt und macht jeder zehn Fotos. Wählt am Ende zusammen das schönste aus.",
+    "emoji": "📸"
+  },
+  {
+    "id": "miniatur-weltreise",
+    "kategorie": "hamburg",
+    "titel": "Miniatur-Weltreise",
+    "beschreibung": "Geht ins Miniatur Wunderland und sucht euch gegenseitig Reiseziele aus, die ihr irgendwann in echt sehen wollt.",
+    "emoji": "🚂"
+  },
+  {
+    "id": "elphi-plaza",
+    "kategorie": "hamburg",
+    "titel": "Elphi-Plaza-Moment",
+    "beschreibung": "Fahrt auf die Elbphilharmonie Plaza, schaut über Hafen und Stadt und schlendert danach ohne Plan durch die HafenCity.",
+    "emoji": "🏛️"
+  },
+  {
+    "id": "alster-feierabend",
+    "kategorie": "hamburg",
+    "titel": "Alster nach Feierabend",
+    "beschreibung": "Macht eine kleine Alster-Runde ohne Leistungsanspruch: nur ein Abschnitt, ein Getränk und eine Bank mit Aussicht.",
+    "emoji": "🚶"
+  },
+  {
+    "id": "sup-alster",
+    "kategorie": "hamburg",
+    "titel": "SUP auf der Alster",
+    "beschreibung": "Pumpt eure SUPs auf und fahrt damit zur Alster. So wird ein normaler Feierabend ein kleiner Sommerurlaub.",
+    "emoji": "🛶"
+  },
+  {
+    "id": "planetarium-date",
+    "kategorie": "hamburg",
+    "titel": "Planetarium-Date",
+    "beschreibung": "Bucht euch eine Vorstellung im Planetarium im Stadtpark und schaut gemeinsam in einen Sternenhimmel, ohne Hamburg zu verlassen.",
+    "emoji": "✨"
+  },
+  {
+    "id": "kunsthallen-date",
+    "kategorie": "hamburg",
+    "titel": "Kunsthallen-Date",
+    "beschreibung": "Geht durch die Hamburger Kunsthalle und sucht jeder ein Bild aus, das der oder die andere danach erklären muss.",
+    "emoji": "🎨"
+  },
+  {
+    "id": "lieblings-brunch",
+    "kategorie": "hamburg",
+    "titel": "Lieblings-Brunch",
+    "beschreibung": "Geht in euer Lieblings-Brunch-Café und nehmt euch Zeit. Heute startet der Tag ohne Plan.",
+    "emoji": "🥑"
+  },
+  {
+    "id": "pizza-date",
+    "kategorie": "hamburg",
+    "titel": "Pizza-Date",
+    "beschreibung": "Geht Pizza oder Pasta essen und teilt euch durch die Karte. Zum Abschluss noch ein Dessert für den perfekten Italienabend.",
+    "emoji": "🍕"
+  },
+  {
+    "id": "cham-vegan",
+    "kategorie": "hamburg",
+    "titel": "Cham Vegan Abend",
+    "beschreibung": "Geht ins Cham Vegan und bestellt mehrere asiatische Gerichte zum Teilen. So bekommt ihr von allem etwas.",
+    "emoji": "🥢"
+  },
+  {
+    "id": "schanzenviertel-foodwalk",
+    "kategorie": "hamburg",
+    "titel": "Schanzenviertel-Foodwalk",
+    "beschreibung": "Sucht euch drei kleine Stops im Schanzenviertel: ein Getränk, einen Snack und ein Dessert. Schlendern zwischendurch ist Pflicht.",
+    "emoji": "🍦"
+  },
+  {
+    "id": "ottensen-bummel",
+    "kategorie": "hamburg",
+    "titel": "Ottensen-Bummel",
+    "beschreibung": "Schlendert ohne festen Plan durch Ottensen: Buchladen, kleine Läden, Kaffee und am Ende ein Abendessen.",
+    "emoji": "📚"
+  },
+  {
+    "id": "isemarkt-mission",
+    "kategorie": "hamburg",
+    "titel": "Isemarkt-Mission",
+    "beschreibung": "Geht auf den Isemarkt und kauft Zutaten für einen besonderen Brunch. Kocht zuhause daraus etwas Schönes.",
+    "emoji": "🥖"
+  },
+  {
+    "id": "hafen-sonnenaufgang",
+    "kategorie": "hamburg",
+    "titel": "Hafen-Sonnenaufgang",
+    "beschreibung": "Steht viel zu früh auf, nehmt Kaffee mit und schaut euch den Hafen an, bevor die Stadt richtig wach ist.",
+    "emoji": "🌄"
+  },
+  {
+    "id": "karaoke-thai-oase",
+    "kategorie": "hamburg",
+    "titel": "Karaoke in der Thai Oase",
+    "beschreibung": "Geht in die Thai Oase, schnappt euch das Mikro und singt euch Songs vor, die euch an gemeinsame Momente erinnern. Schön, peinlich oder beides.",
+    "emoji": "🎤"
+  },
+  {
+    "id": "salsa-schnupperkurs",
+    "kategorie": "hamburg",
+    "titel": "Salsa-Schnupperkurs",
+    "beschreibung": "Geht zu einem Salsa- oder Bachata-Kurs in Hamburg und holt euch ein bisschen Havanna-Gefühl zurück.",
+    "emoji": "💃"
+  },
+  {
+    "id": "touristen-eigene-stadt",
+    "kategorie": "hamburg",
+    "titel": "Touristen in der eigenen Stadt",
+    "beschreibung": "Tut einen Tag lang so, als wärt ihr zum ersten Mal in Hamburg. Kamera, Fähre, Speicherstadt und ein kleines Souvenir füreinander.",
+    "emoji": "🗺️"
+  },
+  {
+    "id": "fotobox-tour",
+    "kategorie": "hamburg",
+    "titel": "Fotobox-Tour",
+    "beschreibung": "Sucht euch mehrere Fotoboxen oder Fotoautomaten in Hamburg und macht daraus eine kleine Beziehungs-Collage zum Aufhängen.",
+    "emoji": "📷"
+  },
+  {
+    "id": "stadtpark-decke",
+    "kategorie": "hamburg",
+    "titel": "Stadtpark-Decke",
+    "beschreibung": "Packt Picknick, Kartenspiel und Decke ein und geht in den Stadtpark. Bleibt so lange, bis es frisch wird.",
+    "emoji": "🌳"
+  },
+  {
+    "id": "camper-altes-land",
+    "kategorie": "fluchten",
+    "titel": "Camper-Nacht im Alten Land",
+    "beschreibung": "Schnappt euch den Camper, fahrt ins Alte Land und verbringt eine Nacht zwischen Obstbäumen. Frühstück am nächsten Morgen draußen vor der Schiebetür.",
+    "emoji": "🚐"
+  },
+  {
+    "id": "apfelblueten-date",
+    "kategorie": "fluchten",
+    "titel": "Apfelblüten-Date",
+    "beschreibung": "Fahrt im Frühling ins Alte Land, spaziert durch die Apfelblüte und macht danach ein Picknick mit Kuchen und Gebäck.",
+    "emoji": "🌸"
+  },
+  {
+    "id": "apfelernte-date",
+    "kategorie": "fluchten",
+    "titel": "Apfelernte-Date",
+    "beschreibung": "Sammelt oder kauft im Alten Land Äpfel und macht daraus zuhause Apfelcrumble, Apfelpfannkuchen oder Apfelkompott.",
+    "emoji": "🍎"
+  },
+  {
+    "id": "stade-altstadt",
+    "kategorie": "fluchten",
+    "titel": "Stade-Altstadt-Tag",
+    "beschreibung": "Fahrt nach Stade, schlendert durch die Altstadt am alten Hafen und macht einen langsamen Tag ohne volles Programm.",
+    "emoji": "🏘️"
+  },
+  {
+    "id": "lueneburg-date",
+    "kategorie": "fluchten",
+    "titel": "Lüneburg-Date",
+    "beschreibung": "Fahrt nach Lüneburg, lauft durch die schiefen Gassen, trinkt Kaffee und sucht euch zum Abend einen schönen Platz fürs Essen.",
+    "emoji": "🏛️"
+  },
+  {
+    "id": "lueneburger-heide",
+    "kategorie": "fluchten",
+    "titel": "Lüneburger-Heide-Spaziergang",
+    "beschreibung": "Fahrt in die Lüneburger Heide, geht eine ruhige Runde durch lila Heideflächen und nehmt Snacks für unterwegs mit.",
+    "emoji": "💜"
+  },
+  {
+    "id": "luebeck-travemuende",
+    "kategorie": "fluchten",
+    "titel": "Lübeck & Travemünde",
+    "beschreibung": "Startet in Lübecks Altstadt mit Marzipan-Schaufenstern und kleinen Gassen. Fahrt am Nachmittag noch für eine Prise Ostseeluft nach Travemünde.",
+    "emoji": "⚓"
+  },
+  {
+    "id": "scharbeutz-camper",
+    "kategorie": "fluchten",
+    "titel": "Scharbeutz-Camper-Date",
+    "beschreibung": "Fahrt mit dem Camper an die Lübecker Bucht, macht einen Strandspaziergang in Scharbeutz und übernachtet in Meernähe.",
+    "emoji": "🌊"
+  },
+  {
+    "id": "timmendorfer-strand",
+    "kategorie": "fluchten",
+    "titel": "Timmendorfer Strand im Wind",
+    "beschreibung": "Fahrt nach Timmendorfer Strand, zieht euch warm an und lauft am Wasser entlang. Ein Strandtag muss nicht perfekt sonnig sein.",
+    "emoji": "💨"
+  },
+  {
+    "id": "ratzeburger-see",
+    "kategorie": "fluchten",
+    "titel": "Ratzeburger See",
+    "beschreibung": "Fahrt an den Ratzeburger See, geht spazieren oder paddelt eine Runde und macht euch einen ruhigen Tag am Wasser.",
+    "emoji": "🏞️"
+  },
+  {
+    "id": "schwerin-schloss",
+    "kategorie": "fluchten",
+    "titel": "Schwerin-Schloss-Tag",
+    "beschreibung": "Macht einen Märchen-Ausflug nach Schwerin mit Schloss, See und vielen Fotos.",
+    "emoji": "🏰"
+  },
+  {
+    "id": "bremen-schnoor",
+    "kategorie": "fluchten",
+    "titel": "Bremen-Schnoor-Date",
+    "beschreibung": "Fahrt nach Bremen, schlendert durchs Schnoorviertel und tut so, als wärt ihr für einen Tag in einer anderen Welt.",
+    "emoji": "🏘️"
+  },
+  {
+    "id": "cuxhaven-watt",
+    "kategorie": "fluchten",
+    "titel": "Cuxhaven-Watt-Date",
+    "beschreibung": "Fahrt nach Cuxhaven für Watt, Wind und Weite. Bei Wattwanderungen vorher Tide checken oder eine geführte Tour buchen.",
+    "emoji": "🦀"
+  },
+  {
+    "id": "st-peter-ording",
+    "kategorie": "fluchten",
+    "titel": "St. Peter-Ording-Tag",
+    "beschreibung": "Fahrt früh nach St. Peter-Ording, lauft über den breiten Strand und macht aus dem Tag einen kleinen Nordsee-Reset.",
+    "emoji": "🏖️"
+  },
+  {
+    "id": "glueckstadt",
+    "kategorie": "fluchten",
+    "titel": "Glückstadt-Ausflug",
+    "beschreibung": "Fahrt nach Glückstadt an der Elbe, lauft durch die kleine Altstadt und macht daraus einen langsamen Küstentag.",
+    "emoji": "🌅"
+  },
+  {
+    "id": "aumuehle-sachsenwald",
+    "kategorie": "fluchten",
+    "titel": "Aumühle & Sachsenwald",
+    "beschreibung": "Fahrt nach Aumühle, geht eine Runde durch den Sachsenwald und kehrt danach in einem Waldcafé ein.",
+    "emoji": "🌲"
+  },
+  {
+    "id": "fischbeker-heide",
+    "kategorie": "fluchten",
+    "titel": "Fischbeker Heide",
+    "beschreibung": "Bleibt nah an Hamburg und fahrt in die Fischbeker Heide. Heide, Weite und Naturgefühl ohne lange Anfahrt.",
+    "emoji": "🌾"
+  },
+  {
+    "id": "mystery-tagestrip",
+    "kategorie": "fluchten",
+    "titel": "Mystery-Tagestrip",
+    "beschreibung": "Schreibt drei Ziele auf Zettel, zieht eines blind und fahrt los. Kein Optimieren, kein Diskutieren.",
+    "emoji": "🎲"
+  },
+  {
+    "id": "nordsee-oder-ostsee",
+    "kategorie": "fluchten",
+    "titel": "Nordsee oder Ostsee",
+    "beschreibung": "Werft eine Münze: Kopf bedeutet Nordsee, Zahl bedeutet Ostsee. Danach wird nur noch gepackt und gefahren.",
+    "emoji": "🪙"
+  },
+  {
+    "id": "camper-fruehstueck",
+    "kategorie": "fluchten",
+    "titel": "Camper-Frühstück",
+    "beschreibung": "Fahrt abends nur ein kleines Stück raus, schlaft im Camper und macht am nächsten Morgen Kaffee vor der Schiebetür.",
+    "emoji": "☕"
+  },
+  {
+    "id": "thermen-tag",
+    "kategorie": "fluchten",
+    "titel": "Thermen-Tag außerhalb",
+    "beschreibung": "Sucht euch eine Therme im Hamburger Umland wie die Holstentherme in Kaltenkirchen, verbringt den Tag im warmen Wasser und fahrt danach müde und entspannt nach Hause.",
+    "emoji": "♨️"
+  },
+  {
+    "id": "umschlag-date",
+    "kategorie": "fluchten",
+    "titel": "Umschlag-Date",
+    "beschreibung": "Bereitet Umschläge mit Themen vor: Meer, Wald, Altstadt, Wellness, Camper. Einer wird gezogen, der Rest des Tages ist gesetzt.",
+    "emoji": "✉️"
+  }
+]
