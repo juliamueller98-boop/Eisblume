@@ -199,69 +199,76 @@ button {
    User Select
    ============================================ */
 
+.user-select-script {
+  font-family: var(--font-script);
+  font-size: 2.6rem;
+  color: var(--pink);
+  text-align: center;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
 .heading-display {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   text-align: center;
   margin-bottom: 2rem;
   letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 .user-select {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  width: 100%;
 }
 
 .user-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.75rem 1.5rem;
-  background: var(--surface);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-lg);
-  transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  justify-content: center;
+  padding: 1.75rem 1rem;
+  border: none;
+  border-radius: 22px;
+  aspect-ratio: 3/4;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
   box-shadow: var(--shadow-sm);
 }
 
-.user-card:active { transform: scale(0.98); }
+.user-card:active { transform: scale(0.97); }
+.user-card:hover { box-shadow: var(--shadow-md); }
 
-.user-card--blume:hover, .user-card--blume:focus {
-  border-color: var(--pink);
-  box-shadow: var(--shadow-md);
+.user-card--blume {
+  background: linear-gradient(160deg, #FFD4DD 0%, #FCE7EE 100%);
+  color: var(--pink-dark);
 }
 
-.user-card--frost:hover, .user-card--frost:focus {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
+.user-card--frost {
+  background: linear-gradient(160deg, #D6E9F7 0%, #E3F0FA 100%);
+  color: var(--blue-dark);
 }
 
 .user-card__emoji {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 3.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
 }
 
 .user-card__name {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.2rem;
 }
 
 .user-card__sub {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-top: 0.15rem;
-}
-
-.user-hint {
-  text-align: center;
-  color: var(--text-muted);
   font-size: 0.85rem;
-  line-height: 1.5;
-  margin-top: 0.5rem;
+  opacity: 0.7;
 }
 
 /* ============================================

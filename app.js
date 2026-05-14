@@ -88,7 +88,7 @@ function setCurrentUser(user) {
 
 function updateUserUI() {
   const label = document.getElementById('current-user-label');
-  if (label) label.textContent = currentUser === 'frost' ? 'Frost' : 'Blume';
+  if (label) label.textContent = currentUser === 'frost' ? 'Eis' : 'Blume';
   const greeting = document.getElementById('menu-greeting');
   if (greeting) {
     const name = currentUser === 'frost' ? 'Konsti' : 'Laura';
