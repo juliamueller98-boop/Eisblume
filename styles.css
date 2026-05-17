@@ -597,6 +597,18 @@ button {
   margin-bottom: 1.5rem;
 }
 
+.swipe-card__done-badge {
+  align-self: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.85rem;
+  border-radius: 14px;
+  background: #DFF2DF;
+  color: #3A7A3F;
+  margin-bottom: 0.5rem;
+  margin-top: -1rem;
+}
+
 .swipe-card--nestwaerme .swipe-card__category {
   background: var(--cat-nest);
   color: var(--cat-nest-dark);
@@ -952,6 +964,34 @@ button {
   border-radius: var(--radius-md);
 }
 
+.overview-item__toggle {
+  font-size: 1.1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.overview-item__toggle:hover {
+  background: var(--pink-soft);
+  color: var(--pink);
+}
+
+.overview-item__toggle:active {
+  transform: scale(0.9);
+}
+
+.overview-item__toggle.done {
+  background: var(--success);
+  color: white;
+}
+
 .overview-item__emoji {
   font-size: 1.5rem;
   flex-shrink: 0;
@@ -1170,6 +1210,24 @@ button {
 
 .detail-overlay__action.is-done {
   background: linear-gradient(135deg, var(--success), #5AA85F);
+}
+
+.detail-overlay__unmatch {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.detail-overlay__unmatch:hover {
+  color: var(--danger);
 }
 
 /* ============================================

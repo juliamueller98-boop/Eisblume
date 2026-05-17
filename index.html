@@ -166,6 +166,7 @@
       <p class="detail-overlay__desc" id="detail-desc"></p>
       <div class="detail-overlay__tags" id="detail-tags"></div>
       <button class="btn btn--primary detail-overlay__action" id="detail-toggle-done">Schon gemacht</button>
+      <button class="detail-overlay__unmatch" id="detail-unmatch">Match auflösen</button>
     </div>
   </div>
 
@@ -204,7 +205,8 @@
     </div>
     <div class="container">
       <div class="filter-bar" id="filter-bar">
-        <button class="filter-chip active" data-filter="open">Offen</button>
+        <button class="filter-chip active" data-filter="all">Alle</button>
+        <button class="filter-chip" data-filter="open">Offen</button>
         <button class="filter-chip" data-filter="match">Matches</button>
         <button class="filter-chip" data-filter="done">Gemacht</button>
       </div>
@@ -228,23 +230,30 @@
       </div>
 
       <div class="info-content" id="info-how">
-        <h3 class="info-h">So funktioniert Eisblume</h3>
-        <p>Eisblume ist ein kleines Date-Spiel. Ihr swiped abwechselnd durch dieselben Ideen, und wenn ihr beide ein Herz vergeben habt, gibt es ein Match.</p>
+        <h3 class="info-h">Willkommen bei Eisblume</h3>
+        <p>Ein kleines Date-Spiel für euch zwei. Ihr swiped abwechselnd durch dieselben Ideen, und wenn beide ein Herz vergeben, ist es ein Match.</p>
 
         <h3 class="info-h">Schritt für Schritt</h3>
         <ol class="info-list">
-          <li>Wählt aus, wer gerade swiped (Blume oder Eis).</li>
-          <li>Geht in eine Kategorie und entscheidet euch pro Karte: Herz nach rechts, weglegen nach links.</li>
-          <li>Reicht das Handy weiter. Wechselt oben rechts den Spieler.</li>
-          <li>Karten, die beide mit Herz markiert haben, landen unter „Unsere Matches".</li>
-          <li>Habt ihr ein Date gemacht? Markiert es als „Gemacht".</li>
+          <li>Wählt aus, wer gerade dran ist: Blume oder Eis.</li>
+          <li>Sucht euch eine Kategorie aus.</li>
+          <li>Pro Karte entscheiden: Herz nach rechts, später nach links (oder die Buttons unten).</li>
+          <li>Reicht das Handy weiter. Oben rechts wechselt ihr, wer gerade swiped.</li>
+          <li>Karten, bei denen beide ein Herz vergeben haben, landen in „Unsere Matches".</li>
+          <li>Habt ihr ein Date erlebt? Markiert es als „Gemacht".</li>
         </ol>
 
+        <h3 class="info-h">Matches</h3>
+        <p>Im Bereich „Unsere Matches" seht ihr alles, was beide mögen. Erledigte Matches werden ausgeblendet, lassen sich aber mit einem Pfeil wieder einblenden.</p>
+
         <h3 class="info-h">Übersicht</h3>
-        <p>Im Bereich „Übersicht" könnt ihr alle Ideen sehen, sortiert nach Offen, Matches und Gemacht. Tippt auf eine Karte für mehr Details.</p>
+        <p>Hier seht ihr alle Ideen mit ihrem Status. Filter: <strong>Alle</strong>, <strong>Offen</strong>, <strong>Matches</strong> und <strong>Gemacht</strong>. Tippt auf eine Karte für mehr Details, oder direkt auf den Kreis rechts, um eine Idee als gemacht zu markieren.</p>
+
+        <h3 class="info-h">Wieder im Stapel</h3>
+        <p>Eine schon gemachte Idee taucht beim Swipen wieder auf mit einem kleinen Hinweis. So bleiben Lieblings-Dates verfügbar. Und falls ein Match doch nicht passt, könnt ihr ihn im Detail wieder „auflösen".</p>
 
         <h3 class="info-h">Hilfe, ich bin durch!</h3>
-        <p>Wenn ihr eine Kategorie komplett geswiped habt, könnt ihr übersprungene Karten wieder freigeben und neu durchgehen.</p>
+        <p>Wenn ihr alle Karten einer Kategorie geswiped habt, könnt ihr übersprungene Karten wieder freigeben und neu durchgehen.</p>
       </div>
 
       <div class="info-content hidden" id="info-legal">

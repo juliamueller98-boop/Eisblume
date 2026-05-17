@@ -141,15 +141,34 @@ function updateMenuCounts() {
 
 function getDeckForCategory(category) {
   const votes = getVotes(currentUser);
+  const blume = getVotes('blume');
+  const frost = getVotes('frost');
+  const doneList = getDone();
+
+  let pool;
   if (category === 'all') {
     if (!allCategoryOrder) {
       allCategoryOrder = shuffleArray(dates).map(d => d.id);
     }
-    return allCategoryOrder
-      .map(id => dates.find(d => d.id === id))
-      .filter(d => d && !votes[d.id]);
+    pool = allCategoryOrder.map(id => dates.find(d => d.id === id)).filter(Boolean);
+  } else {
+    pool = dates.filter(d => d.kategorie === category);
   }
-  return dates.filter(d => d.kategorie === category && !votes[d.id]);
+
+  return pool.filter(d => {
+    const isMatch = blume[d.id] === 'like' && frost[d.id] === 'like';
+    const isDoneItem = doneList.includes(d.id);
+    const userVoted = votes[d.id];
+
+    // Match-Karten ohne Done-Status: überspringen (sie sind in der Match-Liste)
+    if (isMatch && !isDoneItem) return false;
+
+    // Schon-gemacht-Karten: immer wieder im Stapel
+    if (isDoneItem) return true;
+
+    // Sonst: nur Karten, die der User noch nicht bewertet hat
+    return !userVoted;
+  });
 }
 
 function startSwipeFor(category) {
@@ -206,10 +225,15 @@ function buildCard(date, isBg) {
   const card = document.createElement('div');
   card.className = 'swipe-card swipe-card--' + date.kategorie;
   card.dataset.id = date.id;
+  const isDoneItem = isDone(date.id);
+  const doneBadge = isDoneItem
+    ? '<div class="swipe-card__done-badge">✓ Schon mal gemacht</div>'
+    : '';
   card.innerHTML = `
     <div class="swipe-card__stamp swipe-card__stamp--like">Herz</div>
     <div class="swipe-card__stamp swipe-card__stamp--nope">Später</div>
     <div class="swipe-card__category">${CATEGORY_LABELS[date.kategorie]}</div>
+    ${doneBadge}
     <div class="swipe-card__emoji">${date.emoji}</div>
     <h2 class="swipe-card__title">${date.titel}</h2>
     <p class="swipe-card__desc">${date.beschreibung}</p>
@@ -429,7 +453,7 @@ function buildMatchItem(date, isDoneItem) {
 // Overview View
 // ============================================
 
-let overviewFilter = 'open';
+let overviewFilter = 'all';
 
 function renderOverview() {
   const list = document.getElementById('overview-list');
@@ -440,13 +464,14 @@ function renderOverview() {
   let filtered = dates.slice();
 
   if (overviewFilter === 'match') {
-    filtered = filtered.filter(d => blume[d.id] === 'like' && frost[d.id] === 'like');
+    filtered = filtered.filter(d => blume[d.id] === 'like' && frost[d.id] === 'like' && !done.includes(d.id));
   } else if (overviewFilter === 'done') {
     filtered = filtered.filter(d => done.includes(d.id));
   } else if (overviewFilter === 'open') {
-    // "Offen" = noch kein Match (= noch nicht beide ein Herz)
-    filtered = filtered.filter(d => !(blume[d.id] === 'like' && frost[d.id] === 'like'));
+    // "Offen" = noch kein Match und nicht gemacht
+    filtered = filtered.filter(d => !(blume[d.id] === 'like' && frost[d.id] === 'like') && !done.includes(d.id));
   }
+  // 'all' = alles, kein Filter
 
   list.innerHTML = '';
 
@@ -463,7 +488,7 @@ function renderOverview() {
 
     const tags = [];
     tags.push(`<span class="overview-item__tag tag-cat-${date.kategorie}">${CATEGORY_LABELS[date.kategorie]}</span>`);
-    if (isMatch) tags.push('<span class="overview-item__tag tag-status-match">Match</span>');
+    if (isMatch && !isDoneItem) tags.push('<span class="overview-item__tag tag-status-match">Match</span>');
     if (isDoneItem) tags.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
 
     item.innerHTML = `
@@ -472,8 +497,25 @@ function renderOverview() {
         <div class="overview-item__title">${date.titel}</div>
         <div class="overview-item__meta">${tags.join('')}</div>
       </div>
+      <button class="overview-item__toggle ${isDoneItem ? 'done' : ''}" data-id="${date.id}" title="${isDoneItem ? 'Doch noch nicht gemacht' : 'Schon gemacht'}" aria-label="Als gemacht markieren">
+        ${isDoneItem ? '✓' : '○'}
+      </button>
     `;
-    item.addEventListener('click', () => openDetailOverlay(date));
+
+    // Klick auf die Karte (außer Toggle) öffnet Detail-Overlay
+    item.addEventListener('click', (e) => {
+      if (e.target.closest('.overview-item__toggle')) return;
+      openDetailOverlay(date);
+    });
+
+    // Toggle-Button: nur Done-Status togglen, kein Overlay
+    const toggleBtn = item.querySelector('.overview-item__toggle');
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleDone(date.id);
+      renderOverview();
+    });
+
     list.appendChild(item);
   });
 }
@@ -493,6 +535,7 @@ function openDetailOverlay(date) {
   const desc = document.getElementById('detail-desc');
   const tags = document.getElementById('detail-tags');
   const action = document.getElementById('detail-toggle-done');
+  const unmatch = document.getElementById('detail-unmatch');
 
   category.className = 'detail-overlay__category detail-overlay__category--' + date.kategorie;
   category.textContent = CATEGORY_LABELS[date.kategorie];
@@ -506,19 +549,41 @@ function openDetailOverlay(date) {
   const isDoneItem = isDone(date.id);
 
   const tagsHtml = [];
-  if (isMatch) tagsHtml.push('<span class="overview-item__tag tag-status-match">Match</span>');
+  if (isMatch && !isDoneItem) tagsHtml.push('<span class="overview-item__tag tag-status-match">Match</span>');
   if (isDoneItem) tagsHtml.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
   tags.innerHTML = tagsHtml.join('');
 
+  // Done-Toggle: immer verfügbar
+  action.style.display = '';
+  action.textContent = isDoneItem ? 'Doch noch nicht gemacht' : 'Schon gemacht';
+  action.classList.toggle('is-done', isDoneItem);
+
+  // Match auflösen: nur sichtbar wenn aktuell Match
   if (isMatch) {
-    action.style.display = '';
-    action.textContent = isDoneItem ? 'Doch noch nicht gemacht' : 'Schon gemacht';
-    action.classList.toggle('is-done', isDoneItem);
+    unmatch.style.display = '';
   } else {
-    action.style.display = 'none';
+    unmatch.style.display = 'none';
   }
 
   overlay.classList.remove('hidden');
+}
+
+function unmatchCurrent() {
+  if (!currentDetailDate) return;
+  if (!confirm('Match wirklich auflösen? Die Idee landet wieder im Stapel und ihr könnt sie neu bewerten.')) {
+    return;
+  }
+  // Beide Votes löschen, damit es wieder im Swipe-Stapel erscheint
+  deleteVote('blume', currentDetailDate.id);
+  deleteVote('frost', currentDetailDate.id);
+  closeDetailOverlay();
+  // Listen aktualisieren
+  if (document.getElementById('view-matches').classList.contains('active')) {
+    renderMatches();
+    updateMenuCounts();
+  } else if (document.getElementById('view-overview').classList.contains('active')) {
+    renderOverview();
+  }
 }
 
 function closeDetailOverlay() {
@@ -581,6 +646,7 @@ function bindNavigation() {
   // Detail Overlay
   document.getElementById('detail-overlay-close').addEventListener('click', closeDetailOverlay);
   document.getElementById('detail-toggle-done').addEventListener('click', toggleDoneFromDetail);
+  document.getElementById('detail-unmatch').addEventListener('click', unmatchCurrent);
   // Klick auf Backdrop schließt das Overlay
   document.getElementById('detail-overlay').addEventListener('click', (e) => {
     if (e.target.id === 'detail-overlay') closeDetailOverlay();
