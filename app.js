@@ -21,6 +21,17 @@ let currentUser = null;
 let currentCategory = null;
 let currentCard = null;
 let dragState = null;
+let allCategoryOrder = null; // gemischte Reihenfolge für "Alle"
+let showDoneMatches = false;
+
+function shuffleArray(arr) {
+  const result = arr.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
 // ============================================
 // Storage helpers
@@ -130,14 +141,25 @@ function updateMenuCounts() {
 
 function getDeckForCategory(category) {
   const votes = getVotes(currentUser);
-  const pool = category === 'all'
-    ? dates
-    : dates.filter(d => d.kategorie === category);
-  return pool.filter(d => !votes[d.id]);
+  if (category === 'all') {
+    if (!allCategoryOrder) {
+      allCategoryOrder = shuffleArray(dates).map(d => d.id);
+    }
+    return allCategoryOrder
+      .map(id => dates.find(d => d.id === id))
+      .filter(d => d && !votes[d.id]);
+  }
+  return dates.filter(d => d.kategorie === category && !votes[d.id]);
 }
 
 function startSwipeFor(category) {
   currentCategory = category;
+  if (category === 'all') {
+    // immer neu mischen wenn man "Alle" startet
+    allCategoryOrder = shuffleArray(dates).map(d => d.id);
+  } else {
+    allCategoryOrder = null;
+  }
   document.getElementById('swipe-title').textContent = CATEGORY_LABELS[category];
   showView('swipe');
   renderNextCard();
@@ -327,55 +349,87 @@ function hideMatchOverlay() {
 
 function renderMatches() {
   const list = document.getElementById('match-list');
+  const listDone = document.getElementById('match-list-done');
   const empty = document.getElementById('matches-empty');
-  const matches = getMatches();
+  const toggle = document.getElementById('done-toggle');
+  const toggleLabel = document.getElementById('done-toggle-label');
+
+  const allMatches = getMatches();
+  const open = allMatches.filter(d => !isDone(d.id));
+  const done = allMatches.filter(d => isDone(d.id));
 
   list.innerHTML = '';
+  listDone.innerHTML = '';
 
-  if (matches.length === 0) {
+  // Komplett leer?
+  if (allMatches.length === 0) {
     empty.classList.remove('hidden');
     list.classList.add('hidden');
+    listDone.classList.add('hidden');
+    toggle.classList.add('hidden');
     return;
   }
 
   empty.classList.add('hidden');
-  list.classList.remove('hidden');
 
-  matches.forEach(date => {
-    const done = isDone(date.id);
-    const item = document.createElement('div');
-    item.className = 'match-item';
-    item.innerHTML = `
-      <div class="match-item__emoji">${date.emoji}</div>
-      <div class="match-item__body">
-        <div class="match-item__title">${date.titel}</div>
-        <div class="match-item__desc">${date.beschreibung}</div>
-      </div>
-      <button class="match-item__action ${done ? 'done' : ''}" data-id="${date.id}" title="Schon gemacht">
-        ${done ? '✓' : '○'}
-      </button>
-    `;
-    list.appendChild(item);
-  });
+  // Offene Matches
+  if (open.length === 0) {
+    list.classList.add('hidden');
+  } else {
+    list.classList.remove('hidden');
+    open.forEach(date => list.appendChild(buildMatchItem(date, false)));
+  }
 
-  list.querySelectorAll('.match-item__action').forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleDone(btn.dataset.id);
-      renderMatches();
-    });
+  // Done Toggle
+  if (done.length === 0) {
+    toggle.classList.add('hidden');
+    listDone.classList.add('hidden');
+  } else {
+    toggle.classList.remove('hidden');
+    toggleLabel.textContent = showDoneMatches
+      ? `Bereits gemachte ausblenden (${done.length})`
+      : `Bereits gemachte zeigen (${done.length})`;
+
+    if (showDoneMatches) {
+      toggle.classList.add('expanded');
+      listDone.classList.remove('hidden');
+      done.forEach(date => listDone.appendChild(buildMatchItem(date, true)));
+    } else {
+      toggle.classList.remove('expanded');
+      listDone.classList.add('hidden');
+    }
+  }
+}
+
+function buildMatchItem(date, isDoneItem) {
+  const item = document.createElement('div');
+  item.className = 'match-item';
+  item.innerHTML = `
+    <div class="match-item__emoji">${date.emoji}</div>
+    <div class="match-item__body">
+      <div class="match-item__title">${date.titel}</div>
+      <div class="match-item__desc">${date.beschreibung}</div>
+    </div>
+    <button class="match-item__action ${isDoneItem ? 'done' : ''}" data-id="${date.id}" title="${isDoneItem ? 'Wieder als offen markieren' : 'Schon gemacht'}">
+      ${isDoneItem ? '✓' : '○'}
+    </button>
+  `;
+  const btn = item.querySelector('.match-item__action');
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    toggleDone(date.id);
+    renderMatches();
   });
+  // Karte selbst klickbar
+  item.addEventListener('click', () => openDetailOverlay(date));
+  return item;
 }
 
 // ============================================
 // Overview View
 // ============================================
 
-let overviewFilter = 'all';
-
-function getStatusForUser(dateId, user) {
-  const votes = getVotes(user);
-  return votes[dateId] || null; // 'like', 'skip', or null
-}
+let overviewFilter = 'open';
 
 function renderOverview() {
   const list = document.getElementById('overview-list');
@@ -389,10 +443,9 @@ function renderOverview() {
     filtered = filtered.filter(d => blume[d.id] === 'like' && frost[d.id] === 'like');
   } else if (overviewFilter === 'done') {
     filtered = filtered.filter(d => done.includes(d.id));
-  } else if (overviewFilter === 'skipped') {
-    filtered = filtered.filter(d => blume[d.id] === 'skip' || frost[d.id] === 'skip');
   } else if (overviewFilter === 'open') {
-    filtered = filtered.filter(d => !blume[d.id] || !frost[d.id]);
+    // "Offen" = noch kein Match (= noch nicht beide ein Herz)
+    filtered = filtered.filter(d => !(blume[d.id] === 'like' && frost[d.id] === 'like'));
   }
 
   list.innerHTML = '';
@@ -405,7 +458,6 @@ function renderOverview() {
   filtered.forEach(date => {
     const isMatch = blume[date.id] === 'like' && frost[date.id] === 'like';
     const isDoneItem = done.includes(date.id);
-    const userSkipped = getStatusForUser(date.id, currentUser) === 'skip';
     const item = document.createElement('div');
     item.className = 'overview-item';
 
@@ -413,23 +465,6 @@ function renderOverview() {
     tags.push(`<span class="overview-item__tag tag-cat-${date.kategorie}">${CATEGORY_LABELS[date.kategorie]}</span>`);
     if (isMatch) tags.push('<span class="overview-item__tag tag-status-match">Match</span>');
     if (isDoneItem) tags.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
-    if (userSkipped) tags.push('<span class="overview-item__tag tag-status-skipped">Du übersprungen</span>');
-
-    const actions = [];
-    // "Done" Toggle
-    actions.push(`
-      <button class="overview-item__action ${isDoneItem ? 'active' : ''}" data-action="done" data-id="${date.id}" title="Schon gemacht?">
-        ${isDoneItem ? '✓' : '○'}
-      </button>
-    `);
-    // Reset Skip Button (nur wenn aktuell selbst skipped)
-    if (userSkipped) {
-      actions.push(`
-        <button class="overview-item__action overview-item__action--reset" data-action="reset-skip" data-id="${date.id}" title="Wieder in den Stapel">
-          ↺
-        </button>
-      `);
-    }
 
     item.innerHTML = `
       <div class="overview-item__emoji">${date.emoji}</div>
@@ -437,24 +472,71 @@ function renderOverview() {
         <div class="overview-item__title">${date.titel}</div>
         <div class="overview-item__meta">${tags.join('')}</div>
       </div>
-      <div class="overview-item__actions">${actions.join('')}</div>
     `;
+    item.addEventListener('click', () => openDetailOverlay(date));
     list.appendChild(item);
   });
+}
 
-  list.querySelectorAll('[data-action="done"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleDone(btn.dataset.id);
-      renderOverview();
-    });
-  });
+// ============================================
+// Detail Overlay
+// ============================================
 
-  list.querySelectorAll('[data-action="reset-skip"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      deleteVote(currentUser, btn.dataset.id);
-      renderOverview();
-    });
-  });
+let currentDetailDate = null;
+
+function openDetailOverlay(date) {
+  currentDetailDate = date;
+  const overlay = document.getElementById('detail-overlay');
+  const category = document.getElementById('detail-category');
+  const emoji = document.getElementById('detail-emoji');
+  const title = document.getElementById('detail-title');
+  const desc = document.getElementById('detail-desc');
+  const tags = document.getElementById('detail-tags');
+  const action = document.getElementById('detail-toggle-done');
+
+  category.className = 'detail-overlay__category detail-overlay__category--' + date.kategorie;
+  category.textContent = CATEGORY_LABELS[date.kategorie];
+  emoji.textContent = date.emoji;
+  title.textContent = date.titel;
+  desc.textContent = date.beschreibung;
+
+  const blume = getVotes('blume');
+  const frost = getVotes('frost');
+  const isMatch = blume[date.id] === 'like' && frost[date.id] === 'like';
+  const isDoneItem = isDone(date.id);
+
+  const tagsHtml = [];
+  if (isMatch) tagsHtml.push('<span class="overview-item__tag tag-status-match">Match</span>');
+  if (isDoneItem) tagsHtml.push('<span class="overview-item__tag tag-status-done">Gemacht</span>');
+  tags.innerHTML = tagsHtml.join('');
+
+  if (isMatch) {
+    action.style.display = '';
+    action.textContent = isDoneItem ? 'Doch noch nicht gemacht' : 'Schon gemacht';
+    action.classList.toggle('is-done', isDoneItem);
+  } else {
+    action.style.display = 'none';
+  }
+
+  overlay.classList.remove('hidden');
+}
+
+function closeDetailOverlay() {
+  document.getElementById('detail-overlay').classList.add('hidden');
+  currentDetailDate = null;
+}
+
+function toggleDoneFromDetail() {
+  if (!currentDetailDate) return;
+  toggleDone(currentDetailDate.id);
+  // Detail-Overlay aktualisieren
+  openDetailOverlay(currentDetailDate);
+  // Listen aktualisieren, damit beim Schließen alles stimmt
+  if (document.getElementById('view-matches').classList.contains('active')) {
+    renderMatches();
+  } else if (document.getElementById('view-overview').classList.contains('active')) {
+    renderOverview();
+  }
 }
 
 // ============================================
@@ -485,12 +567,41 @@ function bindNavigation() {
     showView('user-select');
   });
 
+  document.getElementById('info-btn').addEventListener('click', () => {
+    showView('info');
+  });
+
   document.getElementById('btn-like').addEventListener('click', () => triggerButtonVote('like'));
   document.getElementById('btn-nope').addEventListener('click', () => triggerButtonVote('skip'));
 
   document.getElementById('match-overlay-close').addEventListener('click', hideMatchOverlay);
 
   document.getElementById('reactivate-skipped').addEventListener('click', reactivateSkipped);
+
+  // Detail Overlay
+  document.getElementById('detail-overlay-close').addEventListener('click', closeDetailOverlay);
+  document.getElementById('detail-toggle-done').addEventListener('click', toggleDoneFromDetail);
+  // Klick auf Backdrop schließt das Overlay
+  document.getElementById('detail-overlay').addEventListener('click', (e) => {
+    if (e.target.id === 'detail-overlay') closeDetailOverlay();
+  });
+
+  // Matches "Bereits gemachte" Toggle
+  document.getElementById('done-toggle').addEventListener('click', () => {
+    showDoneMatches = !showDoneMatches;
+    renderMatches();
+  });
+
+  // Info Tabs
+  document.querySelectorAll('.info-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.info-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.infoTab;
+      document.getElementById('info-how').classList.toggle('hidden', target !== 'how');
+      document.getElementById('info-legal').classList.toggle('hidden', target !== 'legal');
+    });
+  });
 
   document.querySelectorAll('.filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
