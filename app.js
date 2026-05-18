@@ -23,6 +23,7 @@ let currentCard = null;
 let dragState = null;
 let allCategoryOrder = null; // gemischte Reihenfolge für "Alle"
 let showDoneMatches = false;
+let sessionVoted = new Set(); // IDs die in der aktuellen Swipe-Session bewertet wurden (für Done-Karten)
 
 function shuffleArray(arr) {
   const result = arr.slice();
@@ -156,6 +157,9 @@ function getDeckForCategory(category) {
   }
 
   return pool.filter(d => {
+    // Bereits in dieser Session bewertet? Dann raus aus dem Stapel
+    if (sessionVoted.has(d.id)) return false;
+
     const isMatch = blume[d.id] === 'like' && frost[d.id] === 'like';
     const isDoneItem = doneList.includes(d.id);
     const userVoted = votes[d.id];
@@ -163,7 +167,7 @@ function getDeckForCategory(category) {
     // Match-Karten ohne Done-Status: überspringen (sie sind in der Match-Liste)
     if (isMatch && !isDoneItem) return false;
 
-    // Schon-gemacht-Karten: immer wieder im Stapel
+    // Schon-gemacht-Karten: wieder im Stapel (außer in dieser Session schon bewertet)
     if (isDoneItem) return true;
 
     // Sonst: nur Karten, die der User noch nicht bewertet hat
@@ -173,6 +177,7 @@ function getDeckForCategory(category) {
 
 function startSwipeFor(category) {
   currentCategory = category;
+  sessionVoted = new Set(); // Session zurücksetzen
   if (category === 'all') {
     // immer neu mischen wenn man "Alle" startet
     allCategoryOrder = shuffleArray(dates).map(d => d.id);
@@ -307,6 +312,7 @@ function onDragEnd(e, card, date) {
 function flyAway(card, date, action) {
   card.classList.add(action === 'like' ? 'fly-right' : 'fly-left');
   saveVote(currentUser, date.id, action);
+  sessionVoted.add(date.id); // diese Karte ist für diese Session erledigt
 
   setTimeout(() => {
     if (action === 'like' && isMatchFor(date.id)) {
