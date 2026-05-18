@@ -22,6 +22,7 @@ let currentCategory = null;
 let currentCard = null;
 let dragState = null;
 let allCategoryOrder = null; // gemischte Reihenfolge für "Alle"
+let categoryOrder = {}; // gemischte Reihenfolge pro Einzelkategorie
 let showDoneMatches = false;
 let sessionVoted = new Set(); // IDs die in der aktuellen Swipe-Session bewertet wurden (für Done-Karten)
 
@@ -153,10 +154,15 @@ function getDeckForCategory(category) {
     }
     pool = allCategoryOrder.map(id => dates.find(d => d.id === id)).filter(Boolean);
   } else {
-    pool = dates.filter(d => d.kategorie === category);
+    // Für einzelne Kategorien: gemischte Reihenfolge pro Session merken
+    if (!categoryOrder[category]) {
+      const catDates = dates.filter(d => d.kategorie === category);
+      categoryOrder[category] = shuffleArray(catDates).map(d => d.id);
+    }
+    pool = categoryOrder[category].map(id => dates.find(d => d.id === id)).filter(Boolean);
   }
 
-  return pool.filter(d => {
+  const filtered = pool.filter(d => {
     // Bereits in dieser Session bewertet? Dann raus aus dem Stapel
     if (sessionVoted.has(d.id)) return false;
 
@@ -173,6 +179,11 @@ function getDeckForCategory(category) {
     // Sonst: nur Karten, die der User noch nicht bewertet hat
     return !userVoted;
   });
+
+  // Gemachte Karten ans Ende sortieren — neue Ideen zuerst
+  const fresh = filtered.filter(d => !doneList.includes(d.id));
+  const done = filtered.filter(d => doneList.includes(d.id));
+  return [...fresh, ...done];
 }
 
 function startSwipeFor(category) {
@@ -183,6 +194,8 @@ function startSwipeFor(category) {
     allCategoryOrder = shuffleArray(dates).map(d => d.id);
   } else {
     allCategoryOrder = null;
+    // Einzelkategorie: jedes Mal frisch mischen wenn man neu startet
+    delete categoryOrder[category];
   }
   document.getElementById('swipe-title').textContent = CATEGORY_LABELS[category];
   showView('swipe');
