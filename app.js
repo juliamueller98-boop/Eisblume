@@ -338,7 +338,7 @@ function triggerButtonVote(action) {
 }
 
 function reactivateSkipped() {
-  // Remove all 'skip' votes for current user in current category
+  // Skip-Votes für aktuelle Kategorie entfernen
   const votes = getVotes(currentUser);
   let changed = false;
   for (const id in votes) {
@@ -355,6 +355,8 @@ function reactivateSkipped() {
     const key = currentUser === 'frost' ? STORAGE.votesFrost : STORAGE.votesBlume;
     writeJSON(key, votes);
   }
+  // Session zurücksetzen, damit auch zuvor in dieser Session bewertete Karten wieder erscheinen
+  sessionVoted = new Set();
   renderNextCard();
 }
 
